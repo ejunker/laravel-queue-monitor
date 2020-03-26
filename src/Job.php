@@ -3,9 +3,9 @@ namespace Tremby\QueueMonitor;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Psr\Log\LoggerInterface;
 
 class Job implements ShouldQueue
 {
@@ -38,10 +38,10 @@ class Job implements ShouldQueue
     /**
      * Execute the job
      *
-     * @param Log $log
+     * @param LoggerInterface $log
      * @return void
      */
-    public function handle(Log $log)
+    public function handle(LoggerInterface $log)
     {
         $log->debug("Handling check job for queue '{$this->queueName}', queued at {$this->startTime}");
         $status = QueueStatus::get($this->queueName);
